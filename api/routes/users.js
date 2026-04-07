@@ -3,6 +3,7 @@ var router = express.Router();
 
 
 const User = require("../models/User")
+const auth = require("../middleware/auth") 
 
 
 // /* GET users listing. */
@@ -16,24 +17,33 @@ const User = require("../models/User")
 router.post("/register", async function (req, res) {
 
   try {
-  const { username, email, password } = req.body
+  const { email, password } = req.body
 
-  if(!username || !email || !password){
+  if(!email || !password){
     return res.status(400).json({
       error: "All fields required"
     })
   }
-
-  if(password.length < 6){
+  //must contain a lowercase/uppercase/1digit/1special char/ at least 8 letters long
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+  if(!regex.test(password)){
     return res.status(400).json({
-      error: "Password must be at least 6 characters"
+      error: "Password must be at least 8 characters long, including a number, special charecter and must contain at least one uppercase and lowercase char."
+    })
+  }
+
+  const existingUser = await User.findOne({ email })
+
+  if (existingUser) {
+    return res.status(400).json({
+      error: "This email has already been used"
     })
   }
 
   const user = new User({
-    username,
-    email,
-    password
+    email, 
+    password,
+    usernameGenerated: "anon" + Date.now(), //after register an anonymouse name is generated for each user only during registration. 
   })
 
   await user.save()
@@ -53,6 +63,12 @@ router.post("/register", async function (req, res) {
 router.post("/login", async function (req, res){
 try {
   const { email, password } = req.body
+
+  if(!email || !password){
+    return res.status(400).json({
+      error: "All fields required"
+    })
+  }
 
   const user = await User.findOne({ email })
 
@@ -90,6 +106,7 @@ router.get("/logout", (req, res) => {
   res.json({ message: "Logged out" })
 })
 
+//--------------------------------------REMOVE BEFORE SUBMISSION!!!!!!!!!!__________________-
 router.get("/me", function (req, res) {
   res.json({
     session: req.session,
