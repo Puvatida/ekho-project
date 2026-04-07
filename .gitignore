@@ -1,0 +1,6 @@
+node_modules 
+.env
+.DS_Store
+//
+
+#dont upload big install files, mac junk files and passwords
