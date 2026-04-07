@@ -19,7 +19,8 @@ require('dotenv').config();
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const tasksRouter = require('./routes/tasks');
-
+const commentsRouter = require('./routes/comments');
+const postsRouter = require('./routes/posts');
 
 // APP SETUP
 var app = express();
@@ -92,6 +93,11 @@ app.use('/api/users', usersRouter);
 
 // All task-related routes
 app.use('/api/tasks', tasksRouter);
+
+// All task-related routes
+app.use('/api/comments', commentsRouter);
+// All task-related routes
+app.use('/api/posts', postsRouter);
 
 
 // ERROR HANDLING
