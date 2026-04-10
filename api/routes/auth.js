@@ -140,12 +140,13 @@ router.get("/logout", (req, res) => {
   res.json({ message: "Logged out" })
 })
 
-//--------------------------------------REMOVE BEFORE SUBMISSION!!!!!!!!!!__________________-
+// --------------------------------------REMOVE BEFORE SUBMISSION!!!!!!!!!!__________________-
 router.get("/me", function (req, res) {
   res.json({
     session: req.session,
     userId: req.session.userId || null
   });
 });
+
 
 module.exports = router

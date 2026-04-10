@@ -23,7 +23,7 @@ const commentsRouter = require('./routes/comments');
 const postsRouter = require('./routes/posts');
 const communitiesRouter = require('./routes/communities');
 const reportsRouter = require('./routes/reports');
-
+const usersRouter = require('./routes/users');
 
 // APP SETUP
 var app = express();
@@ -98,6 +98,7 @@ app.use('/api/comments', commentsRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/communities', communitiesRouter);
 app.use('/api/reports', reportsRouter);
+app.use('/api/users', usersRouter);
 
 
 // ERROR HANDLING
