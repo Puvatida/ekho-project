@@ -1,11 +1,11 @@
 const mongoose = require("mongoose")
+
 /** _________________________PURPOSE__________________________
- *  Store posts func data
- *  Func: creation, tags, homepage feed, keyward search?, view posts, user profile posts?
- *  Schema fields: author/creator, title, content, tags, community, upvotes, timesteps
- *  -should allow search posts? tag filtering? 
+ *  Schema: name,description, createBy, timestamps. +TAGS and memberCount?
+ *  Supports: Subscribe, community list, community post filtering? 
  */
-const PostSchema = new mongoose.Schema({
+
+const CommunitySchema = new mongoose.Schema({
 // Each task has a title, a completed status, and a reference to the user who created it (userId)
   title: {
     type: String,
@@ -24,4 +24,4 @@ const PostSchema = new mongoose.Schema({
 
 })
 
-module.exports = mongoose.model("Post", PostSchema)
+module.exports = mongoose.model("Community", CommunitySchema)

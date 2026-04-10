@@ -17,10 +17,13 @@ require('dotenv').config();
 
 // Import route files (modular structure)
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 const tasksRouter = require('./routes/tasks');
 const commentsRouter = require('./routes/comments');
 const postsRouter = require('./routes/posts');
+const communitiesRouter = require('./routes/communities');
+const reportsRouter = require('./routes/reports');
+
 
 // APP SETUP
 var app = express();
@@ -89,15 +92,12 @@ app.use(session({
 app.use('/', indexRouter); // Optional - can be used for a simple test route or homepage
 
 // All user-related routes
-app.use('/api/users', usersRouter);
-
-// All task-related routes
+app.use('/api/auth', authRouter);
 app.use('/api/tasks', tasksRouter);
-
-// All task-related routes
 app.use('/api/comments', commentsRouter);
-// All task-related routes
 app.use('/api/posts', postsRouter);
+app.use('/api/communities', communitiesRouter);
+app.use('/api/reports', reportsRouter);
 
 
 // ERROR HANDLING
