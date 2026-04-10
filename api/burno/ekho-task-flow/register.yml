@@ -1,17 +1,17 @@
 info:
   name: register
   type: http
-  seq: 1
+  seq: 4
 
 http:
   method: POST
-  url: http://localhost:9000/api/users/register
+  url: http://localhost:9000/api/auth/register
   body:
     type: json
     data: |-
       {
-        "email": "test@test.com",
-        "password": "Testingne6!"
+        "email": "testProjectHashPass-4@test.com",
+        "password": "TestingProject6!"
       }
   auth: inherit
 

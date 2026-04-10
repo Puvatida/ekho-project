@@ -1,11 +1,11 @@
 info:
-  name: login
+  name: adminReg
   type: http
-  seq: 5
+  seq: 3
 
 http:
   method: POST
-  url: http://localhost:9000/api/auth/login
+  url: http://localhost:9000/api/auth/register
   body:
     type: json
     data: |-
