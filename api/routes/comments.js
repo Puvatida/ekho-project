@@ -4,9 +4,15 @@ var router = express.Router();
 
 const Comment = require("../models/Comment")
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+//__________GET_COMMENTS________
+
+
+//________CREATE_COMMENT________
+
+
+//________UPDATE_COMMENT________
+
+
+//________DELETE_COMMENT________
 
 module.exports = router

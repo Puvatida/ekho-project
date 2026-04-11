@@ -4,9 +4,12 @@ var router = express.Router();
 
 const Report = require("../models/Report")
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+//________REPORT_USER________
+
+//________REPORT_POST________
+
+//________REPORT_COMMENT________
+
+//________REPORT_COMMUNITY________
 
 module.exports = router

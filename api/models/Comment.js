@@ -6,22 +6,36 @@ const mongoose = require("mongoose")
  */
 
 const CommentSchema = new mongoose.Schema({
-// Each task has a title, a completed status, and a reference to the user who created it (userId)
-  title: {
+
+  //schema for a comment
+  content: {
     type: String,
+    trim: true,
+    minlengt: 1,
+    maxlength: 150,
+    require: true
+  },
+
+  //for ownership checks
+  authorId: {
+    type: mongoose.Schema.Types.ObjectId, //store in mongoDB ID 
+    ref: "User",
+    required: true
+  },
+  
+//username for public users
+  authorName: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  //id that was made when each post is created
+  postId: {
+    type: mongoose.Schema.Types.ObjectId, //store in mongoDB ID 
+    ref: "Post",
     required: true
   },
 
-//   completed: {
-//     type: Boolean,
-//     default: false
-//   },
-
-//   userId: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "User"
-//   }
-
-})
+});
 
 module.exports = mongoose.model("Comment", CommentSchema)

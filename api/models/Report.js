@@ -11,15 +11,11 @@ const ReportSchema = new mongoose.Schema({
     required: true
   },
 
-//   completed: {
-//     type: Boolean,
-//     default: false
-//   },
-
-//   userId: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "User"
-//   }
+  targetType: {
+    type: String,
+    enum: ["post", "comment", "community"],
+    required: true
+  }
 
 })
 

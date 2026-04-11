@@ -24,6 +24,7 @@ const postsRouter = require('./routes/posts');
 const communitiesRouter = require('./routes/communities');
 const reportsRouter = require('./routes/reports');
 const usersRouter = require('./routes/users');
+const adminRouter = require('./routes/admin');
 
 // APP SETUP
 var app = express();
@@ -99,6 +100,7 @@ app.use('/api/posts', postsRouter);
 app.use('/api/communities', communitiesRouter);
 app.use('/api/reports', reportsRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/admin', adminRouter);
 
 
 // ERROR HANDLING
