@@ -9,19 +9,49 @@ const PostSchema = new mongoose.Schema({
 // Each task has a title, a completed status, and a reference to the user who created it (userId)
   title: {
     type: String,
-    required: true
+    trim: true,
+    required: true,
+    minlength: 1,
+    maxlength: 50
   },
 
-//   completed: {
-//     type: Boolean,
-//     default: false
-//   },
+  content: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 1,
+    maxlength: 1000
+  },
 
-//   userId: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "User"
-//   }
+  //for ownership checks
+  authorId: {
+    type: mongoose.Schema.Types.ObjectId, //store in mongoDB ID 
+    ref: "User",
+    required: true
+  },
+//username for public users
+  authorName: {
+    type: String,
+    required: true,
+    trim: true
+  },
 
-})
+  //for now.. (DELETE THIS COMMENT LATER****)- 
+  community: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Community",
+    default: null
+  },
+
+  //arry of tags
+  tags: [
+    {
+      type: String,
+      trim: true,
+      lowercase: true
+    }
+  ]
+}, { timestamps: true} //time of upload and update
+)
 
 module.exports = mongoose.model("Post", PostSchema)

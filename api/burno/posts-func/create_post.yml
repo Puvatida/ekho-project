@@ -1,0 +1,23 @@
+info:
+  name: create_post
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:9000/api/posts
+  body:
+    type: json
+    data: |-
+      {
+        "title": "At the pub!",
+        "content": "drink with gang",
+        "tags": ["college", "Griffith"]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
