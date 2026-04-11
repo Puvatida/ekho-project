@@ -59,7 +59,7 @@ router.get("/", async function (req, res){ //get that request
 
 });
 
-//_____________GET_ONE_POST (SEARCH)_____________
+//_____________GET_ONE_POST_(SEARCH)_____________
 router.get("/search", async function (req, res){ //anyone can search request
   try{
     const {title} = req.query //title is the query request

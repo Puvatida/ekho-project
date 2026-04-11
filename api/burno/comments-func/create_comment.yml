@@ -1,0 +1,22 @@
+info:
+  name: create_comment
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:9000/api/comments
+  body:
+    type: json
+    data: |-
+      {
+        "content": "DELETE THIS ONE",
+        "postId": "69daa834c9d32724fb7f181b"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
