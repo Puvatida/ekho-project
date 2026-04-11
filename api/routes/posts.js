@@ -52,14 +52,38 @@ router.get("/", async function (req, res){ //get that request
     //.populate("author", "usernameGenerated") -maybe? 
 
     res.json(posts); 
-  } catch (err){
+  } catch (err){//catch unexpected errors
     console.error(err);
     res.status(500).json({ error: "Server error"})
 }
 
 });
 
-//GET_ONE_POST (SEARCH)
+//_____________GET_ONE_POST (SEARCH)_____________
+router.get("/search", async function (req, res){ //anyone can search request
+  try{
+    const {title} = req.query //title is the query request
+
+    //always check if  theres a query or a post
+    if( !title || title.trim() === ""){
+      return res.status(400).json({
+        error: "Enter your search"
+      });
+    }
+    //find post after wait
+    const post = await Post.find({
+      //find by title that contains the keyword not case sensitive
+      title: {$regex: title.trim(), $options: "i"} 
+    }).populate("community", "name").sort({createdAt: -1}).limit(20);
+
+    res.json(post) 
+
+  }catch (err){//catch unexpected errors
+    console.error(err);
+    res.status(500).json({ error: "Server error"})
+}
+})
+
 
 //___________UPDATE post______(POST OWNER ONLY)________
 router.patch("/:id", auth, postOwner, async function (req, res){
@@ -69,6 +93,7 @@ router.patch("/:id", auth, postOwner, async function (req, res){
     const{ title, content, tags, community} = req.body; 
     const post = await Post.findById(req.params.id)
     
+    //we only want to update fields that have been changed by the user
     if(title !== undefined){
       post.title = title;
     }
@@ -91,7 +116,7 @@ router.patch("/:id", auth, postOwner, async function (req, res){
       post
     });
 
-  }catch (err){
+  }catch (err){ //catch unexpected errors
     console.error(err);
     res.status(500).json({ error: "Server error"})
       }
@@ -103,6 +128,7 @@ router.patch("/:id", auth, postOwner, async function (req, res){
 router.delete("/:id", auth, postOwner, async function (req, res){
  
   try{
+    //find and delete the post by the post id
     const post = await Post.findByIdAndDelete(req.params.id);
     //for debugging
     if( !post){
@@ -110,12 +136,12 @@ router.delete("/:id", auth, postOwner, async function (req, res){
         error: "There's no post to delete"
       });
     }
-    res.json({
+    res.json({ //return message 
       message: "You've deleted a post"
     });
 
   }catch (err){
-    console.error(err);
+    console.error(err);//catch unexpected errors
     res.status(500).json({ error: "Server error"})
       }
 });
