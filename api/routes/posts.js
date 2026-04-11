@@ -43,7 +43,7 @@ router.post("/", auth, async function (req, res) { //need auth
 });
 
 
-//__________________GET_FEED______________________________
+//__________________GET_FEED_______(EVERYONE)_______________
 //when user login app, they get newest feed
 router.get("/", async function (req, res){ //get that request
   try{
@@ -59,9 +59,65 @@ router.get("/", async function (req, res){ //get that request
 
 });
 
-//GET_ONE_POST
+//GET_ONE_POST (SEARCH)
 
-//UPDATE post
-//DELETE own Post
+//___________UPDATE post______(POST OWNER ONLY)________
+router.patch("/:id", auth, postOwner, async function (req, res){
+  //check for user id if they sign in and is the owner of post
+  try{
+    //users can UPDATEpost: titles, content etc.. 
+    const{ title, content, tags, community} = req.body; 
+    const post = await Post.findById(req.params.id)
+    
+    if(title !== undefined){
+      post.title = title;
+    }
+    if(content !== undefined){
+      post.content = content;
+    }
+    if(tags !== undefined){
+      post.tags = tags;
+    }
+    if(community !== undefined){
+      post.community = community;
+    }
+
+    //save
+    await post.save();
+
+    //sending return message
+    res.json({
+      message: "Post Updated!",
+      post
+    });
+
+  }catch (err){
+    console.error(err);
+    res.status(500).json({ error: "Server error"})
+      }
+});
+
+
+//___________DELETE own Post _____________________________
+//only post owner so far getting delete request
+router.delete("/:id", auth, postOwner, async function (req, res){
+ 
+  try{
+    const post = await Post.findByIdAndDelete(req.params.id);
+    //for debugging
+    if( !post){
+      return res.status(404).json({
+        error: "There's no post to delete"
+      });
+    }
+    res.json({
+      message: "You've deleted a post"
+    });
+
+  }catch (err){
+    console.error(err);
+    res.status(500).json({ error: "Server error"})
+      }
+});
 
 module.exports = router
