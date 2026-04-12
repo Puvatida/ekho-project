@@ -1,17 +1,17 @@
 info:
-  name: register
+  name: report_user
   type: http
-  seq: 4
+  seq: 3
 
 http:
   method: POST
-  url: http://localhost:9000/api/auth/register
+  url: http://localhost:9000/api/reports/user
   body:
     type: json
     data: |-
       {
-        "email": "testProjectHashPass-2@test.com",
-        "password": "TestingProject6!"
+        "targetId": "69d9472fac171049ace7a7a2",
+        "reasonOfReport": "Harassment"
       }
   auth: inherit
 

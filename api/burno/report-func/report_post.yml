@@ -1,17 +1,17 @@
 info:
-  name: register
+  name: report_post
   type: http
-  seq: 4
+  seq: 1
 
 http:
   method: POST
-  url: http://localhost:9000/api/auth/register
+  url: http://localhost:9000/api/reports/post
   body:
     type: json
     data: |-
       {
-        "email": "testProjectHashPass-2@test.com",
-        "password": "TestingProject6!"
+        "targetId": "69daa834c9d32724fb7f181b",
+        "reasonOfReport": "Spam or abusive content xd"
       }
   auth: inherit
 

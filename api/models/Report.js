@@ -23,18 +23,18 @@ const ReportSchema = new mongoose.Schema({
 
   //id of the content being reported
   targetId: {
-    type: mongoose.Schema.Types.ObjectId,
+     type: mongoose.Schema.Types.ObjectId,
     required: true,
 
   },
   //catagory of the reported object
   targetType: {
     type: String,
-    enum: ["post", "comment", "community"],
+    enum: ["post", "comment", "community", "user"],
     required: true
   },
 
-  resonOfReport: {
+  reasonOfReport: {
     type: String,
     required: true,
     trim: true, 
