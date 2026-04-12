@@ -10,7 +10,7 @@ http:
     type: json
     data: |-
       {
-        "content": "DELETE THIS ONE",
+        "content": "FORTESTING",
         "postId": "69daa834c9d32724fb7f181b"
       }
   auth: inherit

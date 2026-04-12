@@ -5,12 +5,12 @@ info:
 
 http:
   method: PATCH
-  url: http://localhost:9000/api/comments/69dad65cfdef43788c2d54a1
+  url: http://localhost:9000/api/comments/69dada2f5764ca6244a68621
   body:
     type: json
     data: |-
       {
-        "content": "Updated the DELETED COMMENT"
+        "content": "DOUBLE CHECKING THE UPDATE "
       }
   auth: inherit
 

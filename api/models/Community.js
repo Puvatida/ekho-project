@@ -6,7 +6,7 @@ const mongoose = require("mongoose")
  */
 
 const CommunitySchema = new mongoose.Schema({
-// Each task has a title, a completed status, and a reference to the user who created it (userId)
+
   title: {
     type: String,
     required: true
