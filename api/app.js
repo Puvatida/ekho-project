@@ -1,5 +1,5 @@
 // REQUIRED MODULES
-
+require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -10,7 +10,7 @@ const cors = require('cors');
 // MongoDB + Sessions + Environment Variables
 const mongoose = require('mongoose');
 const session = require('express-session');
-require('dotenv').config();
+
 
 
 // ROUTES

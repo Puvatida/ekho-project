@@ -3,6 +3,8 @@ var router = express.Router();
 
 
 const User = require("../models/User")
+const Post = require("../models/Post")
+
 
 //________GET_REPORTS________
 

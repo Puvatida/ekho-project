@@ -9,8 +9,27 @@ const CommunitySchema = new mongoose.Schema({
 
   title: {
     type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    minlength: 3,
+    maxlength: 100
+  },
+  descsription: {
+    type: String,
+    default: "",
+    maxlength: 500
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true
   },
+  subscribers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }],
+
 
 //   completed: {
 //     type: Boolean,
