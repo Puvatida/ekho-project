@@ -50,15 +50,9 @@ router.post("/register", async function (req, res) {
     })
   }
 
-  //setting admin role for specific email
-  let role = "user"
-
-  if (email === "admin@ekho.com"){
-    role = "admin"
-  }
-
   //hasing the password
   const hashedPassword = await bcrypt.hash(password, 10)
+  
   //for the generate username function in util/generateUsername.js
   const usernameGenerated = await uniqueUsernameGenerate();
 
@@ -94,7 +88,6 @@ try {
   }
 
   const user = await User.findOne({ email })
-//   if(!user || user.password !== password){
    if(!user){
     return res.status(400).json({
       error: "Invalid credentials"
@@ -112,7 +105,7 @@ try {
     id : user._id,
     email: user.email,
     usernameGenerated: user.usernameGenerated,
-    role: user.role
+    //role: user.role
   }
 
   //FIX need to save session first:::::
@@ -139,14 +132,5 @@ router.get("/logout", (req, res) => {
     res.clearCookie("connect.sid"); // important for cookies and session that may still exist 
   res.json({ message: "Logged out" })
 })
-
-// --------------------------------------REMOVE BEFORE SUBMISSION!!!!!!!!!!__________________-
-router.get("/me", function (req, res) {
-  res.json({
-    session: req.session,
-    userId: req.session.userId || null
-  });
-});
-
 
 module.exports = router
