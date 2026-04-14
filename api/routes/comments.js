@@ -6,6 +6,7 @@ const Comment = require("../models/Comment");
 const Post = require("../models/Post");
 const auth = require("../middleware/auth");
 const commentOwner = require("../middleware/commentOwner");
+const commentOwnerOrAdmin = require('../middleware/commnetOwnerOrAdmin');
 
 //__________GET_COMMENTS________
 router.get("/post/:postId", async function (req, res){ //get that request
@@ -90,7 +91,7 @@ router.patch("/:id", auth, commentOwner, async function (req, res){
 });
 
 //________DELETE_COMMENT______comment_owner__
-router.delete("/:id", auth, commentOwner, async function (req, res){
+router.delete("/:id", auth, commentOwnerOrAdmin, async function (req, res){
  
   try{
     //find and delete the comment by the comment id
