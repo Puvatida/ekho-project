@@ -4,6 +4,7 @@ var router = express.Router();
 const Community = require("../models/Community");
 const Post = require("../models/Post");
 const User = require("../models/User");
+const communityOwner = require("../middleware/communityOwner");
 
 // Get all communities
 router.get('/', async (req, res) => {
@@ -49,13 +50,16 @@ router.get('/:id', async (req, res) => {
 // Create community
 router.post('/', async (req, res) => {
   try {
+    if (!req.session.userId){
+      return res.status(401).json({ error: "Not Authenticated" });
+    }
     const { title, description, creator } = req.body;
 
     const newCommunity = new Community({
       title,
       description,
-      createdBy: creator,
-      subscribers: [creator]
+      createdBy: req.session.userId.id,
+      subscribers: [req.session.userId.id]
     });
 
     await newCommunity.save();
@@ -66,7 +70,7 @@ router.post('/', async (req, res) => {
 });
 
 // Delete community
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', communityOwner, async (req, res) => {
   try {
     const community = await Community.findByIdAndDelete(req.params.id);
 
@@ -92,15 +96,20 @@ router.get('/:id/posts', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-  router.post('/:id /subscribe', async (req, res) => {
+  router.post('/:id/subscribe', async (req, res) => {
   try {
+
+    if(!req.session.userId){
+      return res.status(401).json({ error: "NotAuthenticated" });
+    }
+    
     const community = await Community.findById(req.params.id);
 
     if (!community) {
       return res.status(404).json({ message: "Community not found" });
     }
 
-    const userId = req.body.userId;
+    const userId = req.body.userId.id;
 
     if (community.subscribers.includes(userId)) {
       return res.status(400).json({ message: "User already subscribed" });
