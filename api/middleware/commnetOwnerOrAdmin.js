@@ -4,8 +4,10 @@ const Community = require("../models/Community");
 
 async function commentOwnerOrAdmin(req, res, next) {
   try {
+    //find comment infomation
     const comment = await Comment.findById(req.params.id);
 
+    //comment does not exist 
     if (!comment) {
       return res.status(404).json({
         error: "Comment not found"
@@ -45,7 +47,9 @@ async function commentOwnerOrAdmin(req, res, next) {
       error: "Not authorized"
     });
 
-  } catch (err) {
+  } 
+  
+  catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
   }
