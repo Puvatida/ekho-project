@@ -3,7 +3,8 @@ var router = express.Router();
 
 const Post = require("../models/Post")
 const auth = require("../middleware/auth") //for check 
-const postOwner = require("../middleware/postOwner")
+const postOwner = require("../middleware/postOwner");
+const postOwnerOrAdmin = require('../middleware/postOwnerOrAdmin');
 
 //_______________________CREATE post____________________
 //Post method/ request a sent of data/post to the server
@@ -125,7 +126,7 @@ router.patch("/:id", auth, postOwner, async function (req, res){
 
 //___________DELETE own Post _____________________________
 //only post owner so far getting delete request
-router.delete("/:id", auth, postOwner, async function (req, res){
+router.delete("/:id", auth, postOwnerOrAdmin, async function (req, res){
  
   try{
     //find and delete the post by the post id
