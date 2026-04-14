@@ -19,7 +19,7 @@ router.post("/", auth, async function (req, res) { //need auth
       });
     }
 
-    //create new post
+    //create new post=
     const post = new Post({ //set things that are in a post
       title,
       authorId: req.session.userId.id, //request the user id for this
