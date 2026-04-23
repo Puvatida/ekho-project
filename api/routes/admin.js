@@ -11,6 +11,14 @@ const Community = require("../models/Community");
 //fetches all the users reports 
 router.get('/reports', async (req, res) => {
     try {
+
+        const userId = req.params.id;
+
+        //prevents unotharized users to get reports  
+        if(req.session.userId.id !== userId){
+            return res.status(403).json({ error: "You cannot access"});
+        }
+
         const reports = await Report.find()
             .populate('reportedBy', 'username email')
             .populate('reportedContent');
