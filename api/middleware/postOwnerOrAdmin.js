@@ -17,18 +17,22 @@ async function postOwnerOrAdmin(req, res, next) {
     }
 
     //admin
-    const community = await Community.findById(post.communityId);
+    //checks in what community the post is on
+    const community = await Community.findById(post.community);
+        
+    //checks if the requestre is the admin of the community
+    const communityAdmin = community.createdBy.toString() === req.session.userId.id;
 
     //community does not exist
     if (!community) {
       return res.status(404).json({ error: "Community not found" });
     }
 
-    if (community.createdBy.toString() === req.session.userId.id) {
+    if (communityAdmin.createdBy.toString() === req.session.userId.id) {
       return next();
     }
 
-    //if user is not admin then it is not allowed
+    //if user is not admin thenit is not allowed
     return res.status(403).json({ error: "Not authorized" });
 
   } 
