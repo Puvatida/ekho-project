@@ -7,13 +7,6 @@ const uniqueUsernameGenerate = require("../utils/generateUsername")
 // const auth = require("../middleware/auth") 
 
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
-// module.exports = router;
-
 //__________PURPOSE_________---
 /* Account creation (reg)
 acct login
@@ -60,7 +53,7 @@ router.post("/register", async function (req, res) {
     email, 
     password: hashedPassword,
     usernameGenerated, //after register an anonymouse name is generated for each user only during registration. 
-    role
+    role: "user"
 })
 
   await user.save()
@@ -105,7 +98,7 @@ try {
     id : user._id,
     email: user.email,
     usernameGenerated: user.usernameGenerated,
-    //role: user.role
+    role: user.role
   }
 
   //FIX need to save session first:::::

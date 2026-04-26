@@ -5,12 +5,12 @@ info:
 
 http:
   method: POST
-  url: http://localhost:9000/api/reports/user
+  url: https://ekho-project.onrender.com/api/reports/user
   body:
     type: json
     data: |-
       {
-        "targetId": "69d9472fac171049ace7a7a2",
+        "targetId": "69ee6edc3ea288edc267ecb6",
         "reasonOfReport": "Harassment"
       }
   auth: inherit

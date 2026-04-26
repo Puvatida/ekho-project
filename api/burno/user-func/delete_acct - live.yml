@@ -1,11 +1,11 @@
 info:
-  name: http://localhost:9000/api/users/users_posts
+  name: delete_acct - live
   type: http
-  seq: 3
+  seq: 5
 
 http:
-  method: GET
-  url: http://localhost:9000/api/users/users_posts
+  method: DELETE
+  url: https://ekho-project.onrender.com/api/users/me
   auth: inherit
 
 settings:

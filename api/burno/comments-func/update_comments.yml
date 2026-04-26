@@ -5,12 +5,12 @@ info:
 
 http:
   method: PATCH
-  url: http://localhost:9000/api/comments/69dada2f5764ca6244a68621
+  url: https://ekho-project.onrender.com/api/comments/69ee752537a5d2fe70408cb8
   body:
     type: json
     data: |-
       {
-        "content": "DOUBLE CHECKING THE UPDATE "
+        "content": "Update my comment at the pub but in Florida "
       }
   auth: inherit
 

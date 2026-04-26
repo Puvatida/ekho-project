@@ -10,8 +10,8 @@ http:
     type: json
     data: |-
       {
-        "targetId": "69daa834c9d32724fb7f181b",
-        "reasonOfReport": "Spam or abusive content xd"
+        "targetId": "69debb3fc38c0026dc9353cc",
+        "reasonOfReport": "promote drinking"
       }
   auth: inherit
 

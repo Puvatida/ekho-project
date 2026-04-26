@@ -5,13 +5,13 @@ info:
 
 http:
   method: POST
-  url: http://localhost:9000/api/reports/comment
+  url: https://ekho-project.onrender.com/api/reports/comment
   body:
     type: json
     data: |-
       {
         "targetId": "69dada2f5764ca6244a68621",
-        "reasonOfReport": "Spam or abusive content..."
+        "reasonOfReport": "abusive spamming."
       }
   auth: inherit
 

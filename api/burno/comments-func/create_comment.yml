@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: http://localhost:9000/api/comments
+  url: https://ekho-project.onrender.com/api/comments
   body:
     type: json
     data: |-
