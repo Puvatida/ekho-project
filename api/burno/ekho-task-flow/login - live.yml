@@ -1,16 +1,16 @@
 info:
-  name: register
+  name: login - live
   type: http
-  seq: 4
+  seq: 6
 
 http:
   method: POST
-  url: http://localhost:9000/api/auth/register
+  url: https://ekho-project.onrender.com/api/auth/login
   body:
     type: json
     data: |-
       {
-        "email": "testProjectHashPass-7@test.com",
+        "email": "testProjectHashPass-1@test.com",
         "password": "TestingProject6!"
       }
   auth: inherit

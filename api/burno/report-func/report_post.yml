@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: http://localhost:9000/api/reports/post
+  url: "{{url-live}}/api/reports/post"
   body:
     type: json
     data: |-
@@ -14,6 +14,11 @@ http:
         "reasonOfReport": "Spam or abusive content xd"
       }
   auth: inherit
+
+runtime:
+  variables:
+    - name: url-live
+      value: https://ekho-project.onrender.com
 
 settings:
   encodeUrl: true

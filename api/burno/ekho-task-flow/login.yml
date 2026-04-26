@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: http://localhost:9000/api/auth/login
+  url: "{{url-live}}/api/auth/login"
   body:
     type: json
     data: |-

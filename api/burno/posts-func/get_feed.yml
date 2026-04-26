@@ -5,8 +5,13 @@ info:
 
 http:
   method: GET
-  url: http://localhost:9000/api/posts
+  url: "{{url-live}}/api/posts"
   auth: inherit
+
+runtime:
+  variables:
+    - name: url-live
+      value: https://ekho-project.onrender.com
 
 settings:
   encodeUrl: true

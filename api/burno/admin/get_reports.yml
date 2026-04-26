@@ -1,0 +1,32 @@
+info:
+  name: get_reports
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: http://localhost:9000/api/admin/reports/
+  body:
+    type: json
+    data: |-
+      [
+        {
+          "_id": "69debf29c38c0026dc9353cd",
+          "reportedBy": {
+            "_id": "69d96f481a4eafcca87cd746",
+            "username": "dreaded-sweet56",
+            "email": "testprojecthashpass-1@test.com"
+          },
+          "reportedContent": {
+            "_id": "69daa834c9d32724fb7f181b",
+            ...
+          }
+        }
+      ]
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

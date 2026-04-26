@@ -1,11 +1,14 @@
 info:
-  name: delete_post
+  name: delete_community
   type: http
-  seq: 4
+  seq: 5
 
 http:
   method: DELETE
-  url: "{{url-live}}/api/posts/69daa7bec9d32724fb7f1818"
+  url: http://localhost:9000/api/admin/
+  headers:
+    - name: Content-Type
+      value: application/json
   auth: inherit
 
 settings:
