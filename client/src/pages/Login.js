@@ -1,7 +1,7 @@
 import { useState } from "react"; //store user input
 
 import { useNavigate, Link } from "react-router-dom"; //redirect user betwen pages
-import { login, register } from "../api/auth"; //function from auth.js api
+import { login } from "../api/auth"; //function from auth.js api
 
 //import components to be used here
 import Button from "../components/Button";
