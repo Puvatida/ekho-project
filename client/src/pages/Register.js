@@ -29,7 +29,7 @@ function Register(){
             await register({email, password});
             
             //navigate user to login 
-            navigate("/login")
+            navigate("/feed")
 
 
         } 
