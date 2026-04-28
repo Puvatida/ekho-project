@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Navbar from "./components/NavBar";
 import Profile from "./pages/Profile";
+import Feed from "./pages/Feed"; 
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
       <Route path="register" element={<Register/>}></Route>
       <Route path="login" element={<Login/>}></Route>
       <Route path="profile" element={<Profile/>}></Route>
+      <Route path="/feed" element={<Feed />} />
     </Routes>
     
     </BrowserRouter>
