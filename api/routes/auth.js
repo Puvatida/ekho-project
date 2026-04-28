@@ -126,4 +126,16 @@ router.get("/logout", (req, res) => {
   res.json({ message: "Logged out" })
 })
 
+
+// CURRENT USER (IMPORTANT FOR NAVBAR)
+router.get("/me", (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).json({
+      error: "Not logged in"
+    });
+  }
+
+  res.json(req.session.userId); // Ensure session includes usernameGenerated
+});
+
 module.exports = router
