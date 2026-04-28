@@ -1,8 +1,9 @@
-function Button({ children, type = "button"}){ //should be text inside each buttons
+function Button({ children, type = "button", onClick}){ //should be text inside each buttons
     return (
         <button
         type={type} //type
-        className='w-full rounded-xl bg-red-600 text-black py-2'
+        onClick={onClick}
+        className='w-full rounded-xl bg-blue-600 text-black py-2'
         //tailwind styling
         >
                 {children}
@@ -11,4 +12,4 @@ function Button({ children, type = "button"}){ //should be text inside each butt
     );
 }
 
-export default Input;
+export default Button;
