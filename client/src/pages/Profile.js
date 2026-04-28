@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react"; //store user input and api
 
 
-import { useNavigate, Link } from "react-router-dom"; //redirect user betwen pages
+import { useNavigate } from "react-router-dom"; //redirect user betwen pages
 import { logout } from "../api/auth"; //function from auth.js api
 import { viewOwnProfile, deleteOwnProfile } from "../api/users"; //function from users.js api
 
 //import components to be used here
 import Button from "../components/Button";
-import Input from "../components/Input";
+//import Input from "../components/Input";
 
 //profile to see own account, logout and delete. 
 
@@ -58,8 +58,7 @@ function Profile() {
    }
    //check
     if (!user){
-        return
-        <p className="p-6">Loading Profile...</p>;
+        return <p className="p-6">Loading Profile...</p>;
     }
     //catch
     return( //tailwind here
