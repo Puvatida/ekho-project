@@ -1,5 +1,7 @@
 //reuseable Postcard function 
-function PostCard({post}){
+function PostCard({post, currentUser, onDelete}){
+
+
     return  (
     <div className="block w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
       <div className="mb-3">
@@ -39,6 +41,17 @@ function PostCard({post}){
         <button className="inline-flex items-center rounded-xl border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200">
           comment
         </button>
+
+        {/* additional option for user who is the owner of the post to be able to delete it */}
+ 
+          <button 
+            type="button"
+            onClick={() => onDelete(post._id)}
+            className="rounded-xl bg-red-500 px-4 py-2 text-sm font-medium text-white"
+            >
+            Delete
+          </button>
+
       </div>
     </div>
   );
