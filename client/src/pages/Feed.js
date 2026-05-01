@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PostCard from "../components/PostCard";
 
 function Feed() {
   const [posts, setPosts] = useState([]);
@@ -35,9 +36,16 @@ function Feed() {
           </p>
         )}
 
+        {/*connect postcard component to show all posts on feed.  */}
+        {posts.map((post) => (
+          <PostCard key={post._id} post={post} />))}
+
+
+
         {/* SHOWS CONTENT */ }
         {/*Loops through posts and shows all the posts */ }
-        {posts.map((post) => (
+
+        {/* {posts.map((post) => (
           <div key={post._id} className="bg-white p-4 rounded-xl shadow">
 
             <div className="flex items-center gap-3 mb-2">
@@ -45,26 +53,27 @@ function Feed() {
                 src={post.avatar || "https://via.placeholder.com/40"}
                 alt="avatar"
                 className="w-10 h-10 rounded-full"
-              />
+              /> */}
                 
               {/* Shows the username of the post creator */}
-              <span className="font-semibold">
+              {/* <span className="font-semibold">
                 {post.authorName  || "Anonymous"}
               </span>
-            </div>
+            </div> */}
 
             {/* Post title  */}
-            <h2 className="font-bold text-lg mb-1">
+            {/* <h2 className="font-bold text-lg mb-1">
               {post.title}
-            </h2>
+            </h2> */}
 
             {/* content of the post */}
-            <p className="text-gray-700">
+            {/* <p className="text-gray-700">
                 {post.content}
-            </p>
+            </p> */}
 
-          </div>
-        ))}
+          {/* </div> */}
+        
+        {/* ))} */}
 
       </div>
     </div>
