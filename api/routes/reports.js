@@ -133,6 +133,20 @@ router.post("/user", auth, async function (req, res) { //need auth
 
 //________REPORT_COMMUNITY________
 
+//--------------Get all for admin-----------//
+//________GET_ALL_REPORTS_FOR_ADMIN________
+router.get("/", async function (req, res) {
+  try {
+    const reports = await Report.find()
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(reports);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 
 module.exports = router

@@ -51,6 +51,9 @@ function Navbar() {
         <Link to="/" className="hover:text-blue-600 transition">
           Home
         </Link>
+        <Link to="/adminreport" className="hover:text-blue-600 transition">
+          Admin Report
+        </Link>
 
         {/* IF USER IS LOGGED IN */}
         {/* should work when further implemented, double check before final submission */}

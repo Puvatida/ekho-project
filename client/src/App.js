@@ -8,7 +8,7 @@ import Navbar from "./components/NavBar";
 import Profile from "./pages/Profile";
 import Feed from "./pages/Feed"; 
 import CreatePost from "./pages/CreatePost"; 
-
+import AdminReports from "./pages/adminreport";
 import PostCard from "./components/PostCard";
 
 function App() {
@@ -24,6 +24,7 @@ function App() {
       <Route path="profile" element={<Profile/>}></Route>
       <Route path="/feed" element={<Feed />} />
       <Route path="/post" element={<CreatePost />} />
+      <Route path="/adminreport" element={<AdminReports />} />
     </Routes>
     
     </BrowserRouter>
