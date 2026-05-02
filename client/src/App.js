@@ -10,7 +10,7 @@ import Feed from "./pages/Feed";
 import CreatePost from "./pages/CreatePost"; 
 import AdminReports from "./pages/adminreport";
 import PostCard from "./components/PostCard";
-import CreateComment from "./pages/CreateComment";
+// import CreateComment from "./pages/CreateComment";
 
 function App() {
 
@@ -26,7 +26,7 @@ function App() {
       <Route path="/feed" element={<Feed />} />
       <Route path="/post" element={<CreatePost />} />
       <Route path="/adminreport" element={<AdminReports />} />
-      <Route path="/post/:postId/comments" element={<CreateComment />} />
+      {/* <Route path="/post/:postId/comments" element={<CreateComment />} /> */}
     </Routes>
     
     </BrowserRouter>
