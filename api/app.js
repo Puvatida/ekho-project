@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 
-// MongoDB + Sessions + Environment Variables
+// MongoDB + Sessions + Environment Varriables
 const mongoose = require('mongoose');
 const session = require('express-session');
 
