@@ -23,39 +23,33 @@ router.get("/post/:postId", async function (req, res){ //get that request
 }
 });
 
-//________CREATE_COMMENT________
-
-//Post method/ request a sent of data/post to the server
+// CREATE_COMMENT
 router.post("/", auth, async function (req, res) {
-  
-  try{
-    //posting comments contains the content itself and postId 
-    const {content, postId } = req.body; 
+  console.log("Request body:", req.body);  // Log the request body
+  try {
+    const { content, postId } = req.body;
 
-    if( !content || !postId ){ //there must be content in the content space
-      return res.status(400).json({//couldnt be processed
-        error: "Content is required in this section"
-      });
+    if (!content || !postId) {
+      return res.status(400).json({ error: "Content and PostId are required" });
     }
 
-    //create new comment
-    const comment = new Comment({ //set things that are in a comment
+    // Create new comment
+    const comment = new Comment({
       content,
-      authorId: req.session.userId.id, //request the user id for this
+      authorId: req.session.userId.id,
       authorName: req.session.userId.usernameGenerated,
-      postId
+      postId,
     });
 
-    await comment.save()
-    //201 request status code for created sucess status
+    await comment.save();
+    console.log("New Comment Added:", comment); // Log the saved comment
     res.status(201).json({
       message: "You posted a comment!",
-      comment
+      comment,
     });
-  
-  } catch (err){ //for unexpected errors 
-    console.error(err);
-    res.status(500).json({ error: "Server error"})
+  } catch (err) {
+    console.error("Error while adding comment:", err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 

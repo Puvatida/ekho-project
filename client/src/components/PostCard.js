@@ -1,7 +1,10 @@
 import React from "react";
 import { reportPost } from "../api/report";
+import { useNavigate } from "react-router-dom";
 
 function PostCard({ post, currentUser, onDelete }) {
+  const navigate = useNavigate();
+
   async function handleReportPost() {
     const reasonOfReport = prompt("Why are you reporting this post?");
 
@@ -18,6 +21,11 @@ function PostCard({ post, currentUser, onDelete }) {
   const isOwner =
     currentUser?._id === post.createdBy ||
     currentUser?._id === post.createdBy?._id;
+
+  // Function to redirect to the comment page of the post
+  function handleCommentClick() {
+    navigate(`/post/${post._id}/comments`); // Redirect to comments page for the specific post
+  }
 
   return (
     <div className="block w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -53,7 +61,8 @@ function PostCard({ post, currentUser, onDelete }) {
       </p>
 
       <div className="flex items-center gap-2">
-        <button className="rounded-xl border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200">
+        <button className="rounded-xl border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200"
+        onClick={handleCommentClick}>
           Comment
         </button>
 
