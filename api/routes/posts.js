@@ -5,6 +5,7 @@ const Post = require("../models/Post")
 const auth = require("../middleware/auth") //for check 
 const postOwner = require("../middleware/postOwner");
 const postOwnerOrAdmin = require('../middleware/postOwnerOrAdmin');
+const mongoose = require("mongoose");
 
 //_______________________CREATE post____________________
 //Post method/ request a sent of data/post to the server
@@ -145,6 +146,47 @@ router.delete("/:id", auth, postOwnerOrAdmin, async function (req, res){
     console.error(err);//catch unexpected errors
     res.status(500).json({ error: "Server error"})
       }
+});
+
+// Add this route to handle comment creation in the backend
+router.post("/:postId/comments", auth, async function (req, res) {
+  const { postId } = req.params;
+  const { content } = req.body;
+
+  if (!content || content.trim() === "") {
+    return res.status(400).json({
+      error: "Comment content is required",
+    });
+  }
+
+  try {
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({
+        error: "Post not found",
+      });
+    }
+
+    const newComment = {
+      content,
+      authorId: req.session.userId.id, // User ID from session
+      authorName: req.session.userId.usernameGenerated, // Username from session
+      createdAt: new Date(),
+    };
+
+    // Add the new comment to the post's comments array
+    post.comments.push(newComment);
+    await post.save();
+
+    res.json({
+      message: "Comment added successfully",
+      comment: newComment,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
 module.exports = router
