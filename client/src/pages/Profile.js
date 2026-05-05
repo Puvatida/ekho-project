@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"; //store user input and api
 import { useNavigate } from "react-router-dom"; //redirect user betwen pages
 import { logout } from "../api/auth"; //function from auth.js api
 import { viewOwnProfile, deleteOwnProfile } from "../api/users"; //function from users.js api
+import { getUserPosts } from "../api/posts";
 
 //import components to be used here
 import Button from "../components/Button";
@@ -15,6 +16,8 @@ function Profile() {
 
     const navigate = useNavigate(); //redirect user
     const [user, setUser] = useState(null); //state variables
+    const [posts, setPosts] = useState([]); // User posts
+    //const [loading, setLoading] = useState(true);
 
     //fetching user data with useEffect API call
     useEffect(() => {
@@ -23,6 +26,25 @@ function Profile() {
                 const res = await viewOwnProfile(); 
                 console.log(res.data)//fetch user data and store
                 setUser(res.data); 
+                // Accessing the correct user ID
+                alert("Full Response Data: ", JSON.stringify(res.data)); // Log entire response
+                alert("User ID: ", res.data.id); // Check if user.id exists directly
+
+                // Fetch posts for this user
+                if (res.data.id){
+                    try {
+                        const userPosts = await getUserPosts(res.data.id);
+                        setPosts(userPosts);
+                        alert("Hello")
+                    }
+
+                    catch(postError){
+                        alert("Failed to load posts. Please try again.");
+                    }
+                }
+                else{
+                        alert("No user ID found.");
+                    }
             }
             catch(err){ //for error and redirect to login page
                 alert("fail to logout"); 
@@ -96,9 +118,23 @@ function Profile() {
                 Delete Accout
             </button>
 
-        </div>
+            {/* Posts Section */}
+          <div className="mt-6">
+            <h2 className="text-xl font-bold mb-4">Your Posts</h2>
+            {posts.length > 0 ? (
+              posts.map((post) => (
+                <div key={post.id} className="mb-4 p-4 border rounded-lg">
+                  <h3 className="text-lg font-semibold">{post.title}</h3>
+                  <p>{post.content}</p>
+                  <p className="text-sm text-gray-500">{new Date(post.createdAt).toLocaleString()}</p>
+                </div>
+              ))
+            ) : (
+              <p>You haven't created any posts yet.</p> // Message when no posts are found
+            )}
+          </div>
 
-        
+            </div>
         </div>
         </div>
     );

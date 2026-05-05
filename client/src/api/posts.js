@@ -1,4 +1,5 @@
 import API from "./api"; // import axios instance
+
 // import { post } from "../../../api/routes/posts";
 
 //create a post
@@ -16,3 +17,13 @@ export const updatePost = (postId, data) => API.patch(`/posts/${postId}`, data);
 
 //delete post by postId
 export const deletePost = (postId) => API.delete(`/posts/${postId}`);
+
+// Get posts for a specific user
+export const getUserPosts = (userId) => {
+  return API.get(`/posts/user/${userId}`, { withCredentials: true })
+    .then((response) => response.data)
+    .catch((error) => {
+      console.error('Error fetching user posts:', error);
+      throw error;
+    });
+};
