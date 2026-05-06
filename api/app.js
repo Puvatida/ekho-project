@@ -42,7 +42,7 @@ mongoose.connect(process.env.MONGO_URL)
 
 // Allows React frontend (port 3000) to talk to backend
 app.use(cors({
-  origin: process.env.CLIENT_URL || "http://http://localhost:3000/",
+  origin: 'http://localhost:3000',
   credentials: true // IMPORTANT for sessions/cookies
 }));
 
