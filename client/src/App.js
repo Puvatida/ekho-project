@@ -31,31 +31,9 @@ function App() {
     
     </BrowserRouter>
 
-    // testing tailwind
-    // <div className="min-h-screen bg-red-500 text-white flex items-center justify-center">
-    //   <h1 className="text-4xl font-bold">
-    //     Tailwind is working
-    //   </h1>
-    // </div>
   );
 
 
-  // const fakePost = {
-  //   _id: "123",
-  //   title: "Test Post Title",
-  //   authorName: "anonymous_penguin",
-  //   content: "This is a test post to check if PostCard works.",
-  //   tags: ["test", "react", "tailwind"],
-  //   createdAt: new Date().toISOString(),
-  // };
-
-  // return (
-  //   <div className="min-h-screen bg-gray-100 p-6">
-  //     <div className="mx-auto max-w-md">
-  //       <PostCard post={fakePost} />
-  //     </div>
-  //   </div>
-  // );
 }
 
 export default App;

@@ -11,9 +11,9 @@ const CommentSchema = new mongoose.Schema({
   content: {
     type: String,
     trim: true,
-    minlengt: 1,
+    minlength: 1,
     maxlength: 150,
-    require: true
+    required: true
   },
 
   //for ownership checks

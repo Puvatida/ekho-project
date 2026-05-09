@@ -10,3 +10,8 @@ export const createComment = async ({ postId, content }) => {
     throw error; // Throw the error to handle it on the frontend
   }
 };
+
+//fetch all comment to show
+export const getPostComment = (postId) => {
+  return API.get('/comments/post/${postId}');
+};

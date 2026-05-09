@@ -22,6 +22,14 @@ function PostCard({ post, currentUser, onDelete }) {
     currentUser?._id === post.createdBy ||
     currentUser?._id === post.createdBy?._id;
 
+
+  // const postAuthorId = typeofpost.authorId === "object" ? post.authorId._id : post.authorId;
+
+  // const currentUser = currentUser?._id || currentUser?.id;
+
+  // const isOwner =
+  //   currentUserId && String(postAuthorId) === String(currentUserId);
+
   // Function to redirect to the comment page of the post
   function handleCommentClick() {
     navigate(`/post/${post._id}/comments`); // Redirect to comments page for the specific post
