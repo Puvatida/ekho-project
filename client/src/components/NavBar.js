@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [user, setUser] = useState(null);
-  const navigate = useNavigate(); // For programmatically navigating after logout
+  const navigate = useNavigate(); 
 
   // Check session on page load
   useEffect(() => {
@@ -21,7 +21,7 @@ function Navbar() {
           setUser(null); // No user logged in
         }
       })
-      .catch(() => setUser(null)); // If error, reset user (log out)
+      .catch(() => setUser(null)); // If error, log out
   }, []);
 
   // Logout function
@@ -56,17 +56,23 @@ function Navbar() {
         </Link>
 
         {/* IF USER IS LOGGED IN */}
-        {/* should work when further implemented, double check before final submission */}
         {user ? (
           <>
             <Link to="/feed" className="hover:text-blue-600 transition">
               Feed
             </Link>
 
+            <Link to="/communities" className="hover:text-blue-600 transition">
+              Communities
+            </Link>
+
             {/* Display Username */}
-            <span className="text-blue-600 font-semibold">
-              {user.usernameGenerated || "Anonymous"} {/* Fallback to "Anonymous" if no username */}
-            </span>
+            <Link
+                to="/profile"
+                className="text-blue-600 font-semibold hover:underline"
+            >
+                {user.usernameGenerated || "Anonymous"}
+            </Link>
 
             {/* Logout button */}
             <button
