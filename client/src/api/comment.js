@@ -13,5 +13,18 @@ export const createComment = async ({ postId, content }) => {
 
 //fetch all comment to show
 export const getPostComment = (postId) => {
-  return API.get('/comments/post/${postId}');
+  return API.get(`/comments/post/${postId}`);
+};
+
+// Delete a comment
+export const deleteComment = (commentId) => {
+  return API.delete(`/comments/${commentId}`);
+};
+
+// Report a comment
+export const reportComment = (commentId, reason) => {
+  return API.post(`/reports/comment`, {
+    targetId: commentId,
+    reasonOfReport: reason || "Inappropriate content"
+  });
 };
