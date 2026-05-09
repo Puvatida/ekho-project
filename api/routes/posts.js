@@ -6,6 +6,7 @@ const auth = require("../middleware/auth") //for check
 const postOwner = require("../middleware/postOwner");
 const postOwnerOrAdmin = require('../middleware/postOwnerOrAdmin');
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Types;
 
 //_______________________CREATE post____________________
 //Post method/ request a sent of data/post to the server
@@ -148,43 +149,37 @@ router.delete("/:id", auth, postOwnerOrAdmin, async function (req, res){
       }
 });
 
-// Add this route to handle comment creation in the backend
-router.post("/:postId/comments", auth, async function (req, res) {
-  const { postId } = req.params;
-  const { content } = req.body;
-
-  if (!content || content.trim() === "") {
-    return res.status(400).json({
-      error: "Comment content is required",
-    });
-  }
-
+// Get posts by a specific user
+router.get("/user/:userId", auth, async function (req, res) {
   try {
-    const post = await Post.findById(postId);
+    const { userId } = req.params;
 
-    if (!post) {
-      return res.status(404).json({
-        error: "Post not found",
-      });
-    }
+    // Find posts created by the user
+    const posts = await Post.find({ authorId: userId })
+      .populate("community", "name")
+      .sort({ createdAt: -1 });
 
-    const newComment = {
-      content,
-      authorId: req.session.userId.id, // User ID from session
-      authorName: req.session.userId.usernameGenerated, // Username from session
-      createdAt: new Date(),
-    };
-
-    // Add the new comment to the post's comments array
-    post.comments.push(newComment);
-    await post.save();
-
-    res.json({
-      message: "Comment added successfully",
-      comment: newComment,
-    });
+    // Always return an array, even if empty
+    res.json(posts);
   } catch (err) {
     console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+//__________________GET POSTS BY COMMUNITY (WORKING VERSION)_________________
+// routes/posts.js
+router.get("/community/:communityId", async (req, res) => {
+  const { communityId } = req.params;
+
+  try {
+    const posts = await Post.find({ community: communityId })
+      .populate("community", "title") // Only populate community
+      .sort({ createdAt: -1 });
+
+    res.json(posts);
+  } catch (err) {
+    console.error("Error fetching community posts:", err);
     res.status(500).json({ error: "Server error" });
   }
 });
