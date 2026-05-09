@@ -27,3 +27,8 @@ export const getUserPosts = (userId) => {
       throw error;
     });
 };
+
+// Get posts for a specific community
+export const getCommunityPosts = (communityId) => {
+  return API.get(`/posts/community/${communityId}`);
+};
