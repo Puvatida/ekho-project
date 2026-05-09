@@ -1,126 +1,123 @@
 var express = require('express');
 var router = express.Router();
+const mongoose = require("mongoose");
 
 const Community = require("../models/Community");
-const Post = require("../models/Post");
-const User = require("../models/User");
 const communityOwner = require("../middleware/communityOwner");
 
-// Get all communities
-router.get('/', async (req, res) => {
+/** _________________________GET ALL COMMUNITIES__________________________
+ * Returns all communities with _id and title only.
+ */
+router.get("/", async (req, res) => {
   try {
-    const communities = await Community.find();
-    res.status(200).json(communities);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    const communities = await Community.find({}, "title _id").sort({ title: 1 });
+    res.json(communities);
+  } catch (err) {
+    console.error("Error fetching communities:", err);
+    res.status(500).json({ error: err.message });
   }
 });
 
-// Search communities
-router.get('/search/:query', async (req, res) => {
-  try {
-    const query = req.params.query;
-
-    const communities = await Community.find({
-      title: { $regex: query, $options: 'i' }
-    });
-
-    res.status(200).json(communities);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Get specific community
+/** _________________________GET COMMUNITY BY ID__________________________
+ * Returns full community info by ID
+ */
 router.get('/:id', async (req, res) => {
   try {
     const community = await Community.findById(req.params.id)
-      .populate('createdBy', 'username email');
+      .populate('createdBy', 'usernameGenerated'); // match your User schema
 
     if (!community) {
       return res.status(404).json({ message: "Community not found" });
     }
 
-    res.status(200).json(community);
+    const currentUserId = req.session.userId || null;
+
+    res.status(200).json({
+      ...community.toObject(),
+      currentUserId
+    });
   } catch (error) {
+    console.error("Error fetching community by ID:", error);
     res.status(500).json({ error: error.message });
   }
 });
 
-// Create community
+/** _________________________CREATE COMMUNITY__________________________
+ * Create a new community
+ */
 router.post('/', async (req, res) => {
   try {
-    if (!req.session.userId){
+    if (!req.session.userId) {
       return res.status(401).json({ error: "Not Authenticated" });
     }
-    const { title, description, creator } = req.body;
+
+    const { title, description } = req.body;
 
     const newCommunity = new Community({
       title,
       description,
-      createdBy: req.session.userId.id,
-      subscribers: [req.session.userId.id]
+      createdBy: req.session.userId.id || req.session.userId,
+      subscribers: [req.session.userId.id || req.session.userId]
     });
 
     await newCommunity.save();
+
     res.status(201).json(newCommunity);
   } catch (error) {
+    console.error("Error creating community:", error);
     res.status(500).json({ error: error.message });
   }
 });
 
-// Delete community
-router.delete('/:id', communityOwner, async (req, res) => {
+/** _________________________SUBSCRIBE TO COMMUNITY__________________________
+ * Add user to subscribers
+ */
+router.post('/:id/subscribe', async (req, res) => {
   try {
-    const community = await Community.findByIdAndDelete(req.params.id);
-
-    if (!community) {
-      return res.status(404).json({ message: "Community not found" });
+    if (!req.session.userId) {
+      return res.status(401).json({ error: "Not Authenticated" });
     }
 
-    res.status(200).json({ message: "Community deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Get community posts
-router.get('/:id/posts', async (req, res) => {
-  try {
-    const posts = await Post.find({ community: req.params.id })
-      .populate('author', 'username')
-      .sort({ createdAt: -1 });
-
-    res.status(200).json(posts);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-  router.post('/:id/subscribe', async (req, res) => {
-  try {
-
-    if(!req.session.userId){
-      return res.status(401).json({ error: "NotAuthenticated" });
-    }
-    
     const community = await Community.findById(req.params.id);
 
     if (!community) {
       return res.status(404).json({ message: "Community not found" });
     }
 
-    const userId = req.body.userId.id;
+    const userId = req.session.userId.id || req.session.userId;
 
     if (community.subscribers.includes(userId)) {
-      return res.status(400).json({ message: "User already subscribed" });
+      return res.status(400).json({ message: "Already subscribed" });
     }
 
     community.subscribers.push(userId);
     await community.save();
 
-    res.status(200).json({ message: "Subscribed to community successfully" });
+    res.status(200).json({ message: "Subscribed successfully" });
   } catch (error) {
+    console.error("Error subscribing to community:", error);
     res.status(500).json({ error: error.message });
+  }
+});
+
+/** _________________________GET COMMUNITY BY TITLE__________________________
+ * Use query ?title= to search
+ */
+router.get("/by-title", async (req, res) => {
+  try {
+    const title = req.query.title;
+    if (!title) return res.status(400).json({ error: "Title is required" });
+
+    const community = await Community.findOne({
+      title: { $regex: `^${title.trim()}$`, $options: "i" }
+    });
+
+    if (!community) return res.status(404).json({ error: "Community not found" });
+
+    res.json(community);
+  } catch (err) {
+    console.error("Error fetching community by title:", err);
+    res.status(500).json({ error: err.message });
   }
 });
 
