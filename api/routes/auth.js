@@ -120,11 +120,17 @@ try {
 
 
 // LOGOUT
-router.get("/logout", (req, res) => {
-  req.session.destroy()
-    res.clearCookie("connect.sid"); // important for cookies and session that may still exist 
-  res.json({ message: "Logged out" })
-})
+router.post("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Session destroy error:", err);
+      return res.status(500).json({ error: "Logout failed" });
+    }
+
+    res.clearCookie("connect.sid", { httpOnly: true });
+    res.json({ message: "Logged out successfully" });
+  });
+});
 
 
 // CURRENT USER (IMPORTANT FOR NAVBAR)
